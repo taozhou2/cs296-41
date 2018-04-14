@@ -31,7 +31,12 @@ int fib(int n);
 void* func_ptr = NULL;
 
 int main(int argc, char** argv) {
-  get_func_ptr(argv[2]);
+  if (argc != 2){
+    puts("Usage: ./debug <function>");
+    exit(1);
+  }
+
+  get_func_ptr(argv[1]);
 
   pid_t pid = fork();
   if (pid == 0) {
@@ -43,7 +48,7 @@ int main(int argc, char** argv) {
     exit(1);
   }
 
-  parent(pid, argv[2]);
+  parent(pid, argv[1]);
 //  printf("%d\n", __LINE__);
 //  sleep(3);
 //  while(1){}
