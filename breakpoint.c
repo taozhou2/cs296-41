@@ -18,7 +18,8 @@ target_addr_t breakpoint_getip(pid_t pid) {
    * TODO: probably should change to sizeof(int) for 32-bit machines.
    */
   long v = ptrace(PTRACE_PEEKUSER, pid, sizeof(long) * REGISTER_IP);
-  return (target_addr_t) (v - TRAP_LEN);  // TODO: not sure why ?
+  return (target_addr_t) (v - TRAP_LEN);
+  // TODO: not sure why ?
   // After we hit a breakpoint, the saved IP points to the instruction after
   // the trap instruction. When we resume execution, we'll go back and execute
   // the original instruction that we overwrote with the trap.

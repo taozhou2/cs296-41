@@ -200,7 +200,7 @@ int main(int argc, char** argv) {
   pid_t pid = fork();
   if (pid == 0) {
     ptrace(PTRACE_TRACEME, pid);
-    execlp("./hello", "./hello", NULL);
+    execvp(argv[1], argv+1);
     perror("exec failed");
     exit(1);
   }
