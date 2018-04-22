@@ -40,14 +40,21 @@ int main(int argc, char** argv) {
 
   pid_t pid = fork();
   if (pid == 0) {
-    kill(getpid(), SIGSTOP);
-    // execvp(argv[1], argv + 1);
+//    kill(getpid(), SIGSTOP);
+
+    ptrace(PTRACE_TRACEME, pid);
+    puts("execing");
+    execlp("./hello", "./hello", NULL);
+    puts("Exec failed");
 //    call_threads();
-    printf("fact(5) = %d\n", fact(5));
+//    printf("fact(5) = %d\n", fact(5));
 //    printf("fib(5) = %d\n", fib(5));
     exit(1);
   }
 
+//  wait(NULL);
+//  ptrace(PTRACE_O_TRACEEXEC, pid);
+//  ptrace(PTRACE_CONT, pid);
   parent(pid, argv[1]);
 //  printf("%d\n", __LINE__);
 //  sleep(3);
@@ -58,8 +65,21 @@ int main(int argc, char** argv) {
 void parent(pid_t pid, char* func) {
   struct breakpoint *bp, *last_break = NULL;
   void *fact_ip = func_ptr, *last_ip;
-  breakpoint_attach(pid);
+
+  int status = 0;
+
+  // while((status >> 8) != (SIGTRAP | (PTRACE_EVENT_EXIT << 8)))
+  // {
+  //   puts("In while loop of waitpid");
+  //   waitpid(pid, &status, 0);
+  // }
+  // puts("exited");
+
+  wait(NULL);
+//  breakpoint_attach(pid);
   bp = breakpoint_break(pid, fact_ip);
+
+  ptrace(PTRACE_CONT, pid);
 
   char* line = NULL;
   size_t size = 0;
@@ -101,7 +121,7 @@ void get_func_ptr(char* func) {
     close(fd[0]);
     dup2(fd[1], 1);
     char inst[1024];
-    sprintf(inst, "objdump -d debug | grep \"<%s>:\" | cut -d ' ' -f 1 | sed 's/^0*//g'", func);
+    sprintf(inst, "objdump -d hello | grep \"<%s>:\" | cut -d ' ' -f 1 | sed 's/^0*//g'", func);
     system(inst);
     exit(-1);
   }

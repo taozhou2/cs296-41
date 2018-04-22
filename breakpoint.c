@@ -143,6 +143,7 @@ static int run(pid_t pid, int cmd) {
   while (1) {
     ptrace(cmd, pid, 0, last_sig);
     waitpid(pid, &status, 0);
+printf("last_sig: %d\n", status);
 
     if (WIFEXITED(status))
       return 0;
