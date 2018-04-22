@@ -4,7 +4,7 @@
 #include <stdio.h>
 
 int fact(int n);
-int i = 62;
+int i = 42;
 
 int main()
 {
@@ -20,7 +20,8 @@ int main()
 }
 
 int fact(int n) {
-  int test = 2349;
+  int test = 18298;
+  int test2 = 378;
   if (n <= 1)
     return 1;
   return n * fact(n-1);
