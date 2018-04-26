@@ -1,5 +1,6 @@
 #include "breakpoint.h"
 #include "debug.h"
+#include "dictionary.h"
 
 void* func_ptr = NULL;
 void* func_ptr_orig = NULL;
@@ -49,6 +50,12 @@ void parent(pid_t pid, char* func) {
   free(line);
 }
 
+/**
+ * Process the input.
+ * @param  input
+ * @param  pid   pid of the current debuggee
+ * @return       1 if its safe to continues the process, 0 otherwise
+ */
 int handle_input(char* input, pid_t pid) {
   if (strcmp(input, "continue") == 0 || strcmp(input, "c") == 0) {
     return 1;
@@ -189,6 +196,9 @@ void* decodedline(char* ptr) {
 }
 
 int main(int argc, char** argv) {
+
+  dictionary *lines = string_to_string_dictionary_create();
+
   if (argc != 3){
     puts("Usage: ./debug <executable> <function>");
     exit(1);

@@ -4,8 +4,9 @@ WARNINGS = -Wall -Werror -Wextra -Wno-unused-parameter -Wno-unused-variable
 
 CXX = gcc
 CXXFLAGS = -c -g -O0 $(WARNINGS)
-LD = gcc 
-LDFLAGS = -lpthread -lm
+LD = gcc
+LDFLAGS = -Llibs/ -lprovided -lpthread -lm
+INC=-I./includes/
 
 .PHONY: all $(EXE) clean
 
@@ -15,7 +16,7 @@ $(EXE): $(OBJS)
 	$(LD) $(OBJS) $(LDFLAGS) -o $(EXE)
 
 debug.o: debug.c debug.h breakpoint.o
-	$(CXX) $(CXXFLAGS) debug.c
+	$(CXX) $(CXXFLAGS) $(INC) debug.c
 
 breakpoint.o: breakpoint.c breakpoint.h
 	$(CXX) $(CXXFLAGS) breakpoint.c
