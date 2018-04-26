@@ -18,6 +18,14 @@
 *.o
 *.so
 
+# .o libs #
+###########
+!set.o 
+!dictionary.o 
+!compare.o 
+!vector.o 
+!callbacks.o
+
 # Packages #
 ############
 # it's better to unpack these files and commit the raw source
