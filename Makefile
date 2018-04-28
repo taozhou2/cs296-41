@@ -1,5 +1,5 @@
 EXE = debugger
-OBJS += debug.o breakpoint.o set-release.o dictionary-release.o compare-release.o vector-release.o callbacks.o
+OBJS += debug.o breakpoint.o libs/set.o libs/dictionary.o libs/compare.o libs/vector.o libs/callbacks.o
 WARNINGS = -Wall -Werror -Wextra -Wno-unused-parameter -Wno-unused-variable
 
 CXX = gcc
@@ -22,4 +22,4 @@ breakpoint.o: breakpoint.c breakpoint.h
 	$(CXX) $(CXXFLAGS) breakpoint.c
 
 clean:
-	rm -rf *.o $(EXE)
+	rm -rf debug.o breakpoint.o $(EXE)

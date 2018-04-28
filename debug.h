@@ -11,6 +11,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <pthread.h>
+#include <ctype.h>
+#include <string.h>
 
 /**
  * Executes commands that the parent uses to trace/debug the child.
@@ -25,8 +27,7 @@ void parent(pid_t pid, char* func);
  *
  * @param   input           User input that contains instruction.
  *
- * @return                  2 if it is ok to step through the program,
- *                          1 if it is ok to continue the program, 
+ * @return                  1 if it is ok to continue the program,
  *                          0 otherwise
  */
 int handle_input(char* input, pid_t pid);
@@ -60,11 +61,28 @@ int get_variable_offset(char* variable);
  */
 void get_func_ptr(char* func);
 
+// /**
+//  *
+//  *
+//  * @param   ptr
+//  */
+// void* decodedline(char* ptr);
+
+
 /**
- * 
- *
- * @param   ptr             
+ * Parse the the line number mapping of global variable exe into a dictionary.
  */
-void* decodedline(char* ptr);
+void parse_line_number();
+
+
+/**
+ * Use objdump --dwarf=decodedline <exe> to get line numeber - mem addr mapping.
+ * @return The raw output of decodedline.
+ */
+char* get_raw_lines();
+
+void* get_next_line_addr(void* curr_line);
+
+void* debugger_next_line(void *last_ip, pid_t pid, struct breakpoint *bp);
 
 #endif
