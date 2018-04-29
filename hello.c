@@ -31,8 +31,8 @@ int fact(int n) {
 
 int foo(int x) {
   int j = x;
-  j++;
-  for(int i = 0; i < x; i++){
-    fact(i);
+  for(int i = 0; i < 100; i++)
+  {
+    j = i;
   }
 }
