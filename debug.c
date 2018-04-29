@@ -103,7 +103,7 @@ int get_variable_offset(char* variable) {
     dup2(fd[1], 1);
     char inst[1024];
 
-    sprintf(inst, "objdump --dwarf=info %s | sed -n '/%p/,/<1>/p' | grep \"%s\" -A 10 | grep -Po 'fbreg: -\\K[^)]*' -m 1", exe, func_ptr_orig, variable);
+    sprintf(inst, "objdump --dwarf=info %s | sed -n '/%p/,/<1>/p' | grep \" %s\" -A 10 | grep -Po 'fbreg: -\\K[^)]*' -m 1", exe, func_ptr_orig, variable);
     system(inst);
     exit(-1);
   }
