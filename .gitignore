@@ -7,6 +7,9 @@
 # Unignore all dirs
 !*/
 
+# Unignore my_program
+!my_program
+
 ### Above combination will ignore all files without extension ###
 
 # Compiled source #
@@ -17,6 +20,14 @@
 *.exe
 *.o
 *.so
+
+# .o libs #
+###########
+!set.o 
+!dictionary.o 
+!compare.o 
+!vector.o 
+!callbacks.o
 
 # Packages #
 ############
